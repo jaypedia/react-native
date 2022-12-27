@@ -1,18 +1,28 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
 import { StartGamePage } from './src/pages/StartGamePage';
+import { GamePage } from './src/pages/GamePage';
+import { COLOR } from './src/styles/color';
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState<null | number>(null);
+
+  const handlePickedNumber = (number: number) => {
+    setUserNumber(number);
+  };
+
   return (
-    <LinearGradient colors={['#fbeec1', '#659dbd']} style={styles.container}>
+    <LinearGradient colors={[COLOR.yellow500, COLOR.blue500]} style={styles.container}>
       <ImageBackground
         source={require('./assets/image/mountain.jpeg')}
         resizeMode="cover"
         style={styles.container}
         imageStyle={styles.image}
       >
-        <StartGamePage />
+        <SafeAreaView style={styles.container}>
+          {userNumber ? <GamePage /> : <StartGamePage onPickNumber={handlePickedNumber} />}
+        </SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );
