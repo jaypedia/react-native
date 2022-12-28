@@ -9,6 +9,9 @@ import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState<null | number>(null);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const [rounds, setRounds] = useState<number>(1);
   const [fontsLoaded] = useFonts({
     roboto: require('./assets/fonts/RobotoMono-Regular.ttf'),
     'roboto-bold': require('./assets/fonts/RobotoMono-Bold.ttf'),
@@ -18,8 +21,9 @@ export default function App() {
     return <AppLoading />;
   }
 
-  const [userNumber, setUserNumber] = useState<null | number>(null);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const increaseRoundHandler = () => {
+    setRounds((cur) => cur + 1);
+  };
 
   const handlePickedNumber = (number: number) => {
     setUserNumber(number);
@@ -30,12 +34,29 @@ export default function App() {
     setIsGameOver(true);
   };
 
+  const startGameHandler = () => {
+    setUserNumber(null);
+    setIsGameOver(false);
+    setRounds(1);
+  };
+
   let mainPage = <StartGamePage onPickNumber={handlePickedNumber} />;
 
   if (userNumber && !isGameOver) {
-    mainPage = <GamePage userNumber={userNumber} onGameOver={gameOverHandler} />;
+    mainPage = (
+      <GamePage
+        userNumber={userNumber}
+        onGameOver={gameOverHandler}
+        rounds={rounds}
+        onIncreaseRound={increaseRoundHandler}
+      />
+    );
   } else if (isGameOver) {
-    mainPage = <GameOverPage />;
+    mainPage = (
+      <GameOverPage rounds={rounds} onRestart={startGameHandler} userNumber={userNumber} />
+    );
+  } else if (!userNumber) {
+    mainPage = <StartGamePage onPickNumber={handlePickedNumber} />;
   }
 
   return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextInput, View, StyleSheet, Alert } from 'react-native';
+import { TextInput, View, StyleSheet, Alert, Text } from 'react-native';
 import { CustomButton } from '../components/ui/CustomButton';
 import { InstructionText } from '../components/ui/InstructionText';
 import { Title } from '../components/ui/Title';
@@ -30,9 +30,10 @@ export const StartGamePage = ({ onPickNumber }) => {
 
   return (
     <View style={styles.rootContainer}>
-      <Title>Guess My Number!</Title>
+      <Title>🧐 Guess My Number! 🤩</Title>
+      <InstructionText>Your phone will guess your number. </InstructionText>
       <View style={styles.inputContainer}>
-        <InstructionText>Enter a Number</InstructionText>
+        <InstructionText>👇 Enter a Number (1~99)</InstructionText>
         <TextInput
           maxLength={2}
           style={styles.numberInput}
@@ -42,10 +43,10 @@ export const StartGamePage = ({ onPickNumber }) => {
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <CustomButton text="Confirm" onPress={confirmInputHandler} />
+            <CustomButton onPress={confirmInputHandler}>Confirm</CustomButton>
           </View>
           <View style={styles.button}>
-            <CustomButton text="Reset" onPress={resetNumber} />
+            <CustomButton onPress={resetNumber}>Reset</CustomButton>
           </View>
         </View>
       </View>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
   },
   inputContainer: {
-    marginTop: 50,
+    marginTop: 30,
     padding: 20,
     backgroundColor: COLOR.blue500,
     elevation: 30,

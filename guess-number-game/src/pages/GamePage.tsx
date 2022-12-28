@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, StyleSheet, Alert, FlatList, Text } from 'react-native';
 import { NumberContainer } from '../components/game/NumberContainer';
 import { Card } from '../components/ui/Card';
 import { CustomButton } from '../components/ui/CustomButton';
@@ -7,18 +7,29 @@ import { InstructionText } from '../components/ui/InstructionText';
 import { Title } from '../components/ui/Title';
 import { generateRandomBetween } from '../utils/randomNumber';
 import { Ionicons } from '@expo/vector-icons';
+import { GuessNumberBox } from '../components/game/GuessNumberBox';
 
 let minBoundary = 1;
 let maxBoundary = 100;
 
 type GamePageProps = {
   userNumber: number;
+  rounds: number;
   onGameOver: () => void;
+  onIncreaseRound: () => void;
 };
 
-export const GamePage = ({ userNumber, onGameOver }: GamePageProps) => {
-  const initialNumber = generateRandomBetween(minBoundary, maxBoundary, userNumber);
+export const GamePage = ({ userNumber, rounds, onGameOver, onIncreaseRound }: GamePageProps) => {
+  const initialNumber = generateRandomBetween(1, 100, userNumber);
   const [currentNumber, setCurrentNumber] = useState(initialNumber);
+  const [guessNumberList, setGuessNumberList] = useState([initialNumber]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
+  console.log(minBoundary, maxBoundary);
 
   const nextGuessHander = (direction: string) => {
     if (
@@ -45,11 +56,14 @@ export const GamePage = ({ userNumber, onGameOver }: GamePageProps) => {
     if (newNumber === userNumber) {
       onGameOver();
     }
+    onIncreaseRound();
+    setGuessNumberList((cur) => [newNumber, ...cur]);
   };
 
   return (
     <View style={styles.container}>
       <Title>Opponent's Guess</Title>
+
       <NumberContainer>{currentNumber}</NumberContainer>
       <Card>
         <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
@@ -66,6 +80,16 @@ export const GamePage = ({ userNumber, onGameOver }: GamePageProps) => {
           </View>
         </View>
       </Card>
+
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guessNumberList}
+          renderItem={({ item, index }) => (
+            <GuessNumberBox number={item} round={guessNumberList.length - index} />
+          )}
+          keyExtractor={(item) => item.toString()}
+        />
+      </View>
     </View>
   );
 };
@@ -83,5 +107,8 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     marginBottom: 20,
+  },
+  listContainer: {
+    flex: 1,
   },
 });
