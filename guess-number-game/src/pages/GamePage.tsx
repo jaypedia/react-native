@@ -6,6 +6,7 @@ import { CustomButton } from '../components/ui/CustomButton';
 import { InstructionText } from '../components/ui/InstructionText';
 import { Title } from '../components/ui/Title';
 import { generateRandomBetween } from '../utils/randomNumber';
+import { Ionicons } from '@expo/vector-icons';
 
 let minBoundary = 1;
 let maxBoundary = 100;
@@ -54,10 +55,14 @@ export const GamePage = ({ userNumber, onGameOver }: GamePageProps) => {
         <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <CustomButton text="-" onPress={nextGuessHander.bind(this, 'lower')} />
+            <CustomButton onPress={nextGuessHander.bind(this, 'lower')}>
+              <Ionicons name="md-remove" size={24} color="black" />
+            </CustomButton>
           </View>
           <View style={styles.button}>
-            <CustomButton text="+" onPress={nextGuessHander.bind(this, 'greater')} />
+            <CustomButton onPress={nextGuessHander.bind(this, 'greater')}>
+              <Ionicons name="md-add" size={24} color="black" />
+            </CustomButton>
           </View>
         </View>
       </Card>

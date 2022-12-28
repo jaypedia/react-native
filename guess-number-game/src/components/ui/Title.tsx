@@ -6,7 +6,7 @@ export const Title = ({ children }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontWeight: 'bold',
+    fontFamily: 'roboto-bold',
     textAlign: 'center',
     fontSize: 24,
     borderWidth: 3,

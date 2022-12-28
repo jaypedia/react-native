@@ -5,8 +5,19 @@ import { StartGamePage } from './src/pages/StartGamePage';
 import { GamePage } from './src/pages/GamePage';
 import { COLOR } from './src/styles/color';
 import { GameOverPage } from './src/pages/GameOverPage';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    roboto: require('./assets/fonts/RobotoMono-Regular.ttf'),
+    'roboto-bold': require('./assets/fonts/RobotoMono-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   const [userNumber, setUserNumber] = useState<null | number>(null);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
 

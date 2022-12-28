@@ -1,11 +1,11 @@
 import { Pressable, View, Text, StyleSheet } from 'react-native';
 import { COLOR } from '../../styles/color';
 
-export const CustomButton = ({ text, onPress }) => {
+export const CustomButton = ({ children, onPress }) => {
   return (
     <View style={styles.outerButtonContainer}>
       <Pressable onPress={onPress} android_ripple={{ color: 'black' }}>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text}>{children}</Text>
       </Pressable>
     </View>
   );
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   text: {
-    fontWeight: 'bold',
+    fontFamily: 'roboto-bold',
     textAlign: 'center',
     fontSize: 18,
   },
