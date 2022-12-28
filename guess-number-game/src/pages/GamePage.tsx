@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Pressable, View, Text, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { NumberContainer } from '../components/game/NumberContainer';
+import { Card } from '../components/ui/Card';
 import { CustomButton } from '../components/ui/CustomButton';
+import { InstructionText } from '../components/ui/InstructionText';
 import { Title } from '../components/ui/Title';
-import { generateRandomBetween } from '../util/randomNumber';
+import { generateRandomBetween } from '../utils/randomNumber';
 
 let minBoundary = 1;
 let maxBoundary = 100;
@@ -48,11 +50,17 @@ export const GamePage = ({ userNumber, onGameOver }: GamePageProps) => {
     <View style={styles.container}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentNumber}</NumberContainer>
-      <View>
-        <Text>Higher or lower?</Text>
-        <CustomButton text="-" onPress={nextGuessHander.bind(this, 'lower')} />
-        <CustomButton text="+" onPress={nextGuessHander.bind(this, 'greater')} />
-      </View>
+      <Card>
+        <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <CustomButton text="-" onPress={nextGuessHander.bind(this, 'lower')} />
+          </View>
+          <View style={styles.button}>
+            <CustomButton text="+" onPress={nextGuessHander.bind(this, 'greater')} />
+          </View>
+        </View>
+      </Card>
     </View>
   );
 };
@@ -61,5 +69,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  button: {
+    flex: 1,
+  },
+  instructionText: {
+    marginBottom: 20,
   },
 });
