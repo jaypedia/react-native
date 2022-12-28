@@ -1,5 +1,5 @@
 import { Pressable, View, Text, StyleSheet } from 'react-native';
-import { COLOR } from '../styles/color';
+import { COLOR } from '../../styles/color';
 
 export const CustomButton = ({ text, onPress }) => {
   return (
