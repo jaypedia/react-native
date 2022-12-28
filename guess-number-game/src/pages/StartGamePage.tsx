@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { TextInput, View, StyleSheet, Alert } from 'react-native';
-import { CustomButton } from '../components/CustomButton';
+import { CustomButton } from '../components/ui/CustomButton';
+import { InstructionText } from '../components/ui/InstructionText';
+import { Title } from '../components/ui/Title';
 import { COLOR } from '../styles/color';
 
 export const StartGamePage = ({ onPickNumber }) => {
@@ -27,20 +29,24 @@ export const StartGamePage = ({ onPickNumber }) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        maxLength={2}
-        style={styles.numberInput}
-        keyboardType="number-pad"
-        value={enteredNumber}
-        onChangeText={numberInputHandler}
-      />
-      <View style={styles.buttonContainer}>
-        <View style={styles.button}>
-          <CustomButton text="Confirm" onPress={confirmInputHandler} />
-        </View>
-        <View style={styles.button}>
-          <CustomButton text="Reset" onPress={resetNumber} />
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number!</Title>
+      <View style={styles.inputContainer}>
+        <InstructionText>Enter a Number</InstructionText>
+        <TextInput
+          maxLength={2}
+          style={styles.numberInput}
+          keyboardType="number-pad"
+          value={enteredNumber}
+          onChangeText={numberInputHandler}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <CustomButton text="Confirm" onPress={confirmInputHandler} />
+          </View>
+          <View style={styles.button}>
+            <CustomButton text="Reset" onPress={resetNumber} />
+          </View>
         </View>
       </View>
     </View>
@@ -48,9 +54,14 @@ export const StartGamePage = ({ onPickNumber }) => {
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    padding: 20,
+  rootContainer: {
+    flex: 1,
+    alignItems: 'center',
     marginTop: 100,
+  },
+  inputContainer: {
+    marginTop: 50,
+    padding: 20,
     backgroundColor: COLOR.blue500,
     elevation: 30,
     shadowOffset: { width: 5, height: 5 },
